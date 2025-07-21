@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Monthsary!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+    }
+
+    .envelope {
+      width: 200px;
+      height: 150px;
+      background: #fff;
+      border: 2px solid #e91e63;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      position: relative;
+      cursor: pointer;
+      padding-top: 40px;
+      z-index: 5;
+    }
+
+    .flap {
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 60px solid #e91e63;
+      position: absolute;
+      top: -60px;
+      left: 0;
+    }
+
+    .letter-icon img {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #e91e63;
+      box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+      animation: bounceIn 0.8s ease, glowPulse 2s ease-in-out infinite;
+    }
+
+    .letter {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: slideUp 1s ease forwards;
+      width: 90%;
+      max-width: 400px;
+      height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 15;
+      text-align: left;
+    }
+
+    .letter h1 {
+      margin-top: 0;
+      color: #e91e63;
+    }
+
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 50%);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(233, 30, 99, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(233, 30, 99, 1);
+      }
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 4s ease-in infinite;
+      z-index: 11;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) rotate(45deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="letter-icon">
+        <!-- Replace this filename with your actual image -->
+        <img id="coverPhoto" src="pic.jpg" alt="Our Photo" />
+      </div>
+      <p>Open Me</p>
+    </div>
+
+    <div class="letter" id="letter">
+      <div class="message">
+        <h1>Happy Monthsary!</h1>
+        <p id="letterContent">
+          <!-- Message inserted by JavaScript -->
+        </p>
+      </div>
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const hearts = document.getElementById('hearts');
+    const letterContent = document.getElementById('letterContent');
+
+    envelope.addEventListener('click', () => {
+      letter.style.display = 'block';
+      letterContent.innerText = `
+My dearest love,
+
+Happy Monthsary! I can’t begin to describe how grateful I am for each day we’ve shared. You have been my peace, my joy, and my constant source of strength.
+
+Every moment with you feels like a beautiful dream. Thank you for loving me, supporting me, and believing in us. I fall more in love with you every single day, in ways I never thought were possible.
+
+No matter what the world throws at us, I know we’ll face it hand in hand. Here’s to many more months of laughter, late-night talks, hugs, and all the little things that make our love special.
+
+Forever yours,
+❤️ [Your Name]
+      `;
+    });
+
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.top = `100%`;
+      heart.style.animationDuration = `${2 + Math.random() * 2}s`;
+      hearts.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
+    }
+
+    setInterval(createFloatingHeart, 300);
+  </script>
+</body>
+</html>
